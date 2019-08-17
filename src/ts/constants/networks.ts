@@ -34,8 +34,7 @@ export const chains: {[chainType: string]: Array<Network>} = {
 }
 
 export const networks: {[name: string]: Network} = {
-  [Alexander.name]: Alexander,
-  [TestNode.name]: TestNode
+  [Alexander.name]: Alexander
 }
 
 export const findNetwork = (genesisHash: string): Network | null => {
