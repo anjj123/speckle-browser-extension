@@ -35,7 +35,7 @@ class BottomMenu extends React.Component<IBottomMenuProps> {
 
     return (
       <div className='bottom-menu'>
-        <Menu fluid={true} widths={4} icon='labeled' borderless={true} size='mini'>
+        <Menu fluid={true} widths={2} icon='labeled' borderless={true} size='mini'>
           <Menu.Item
             color={color as SemanticCOLORS}
             name='home'
@@ -45,27 +45,6 @@ class BottomMenu extends React.Component<IBottomMenuProps> {
             <Icon name='home' />
             {t('menuHome')}
           </Menu.Item>
-
-          <Menu.Item
-            color={color as SemanticCOLORS}
-            name='stake'
-            active={pathname === NAME_MAP.stake}
-            onClick={this.handleItemClick.bind(this, 'stake')}
-          >
-            <Icon name='chart pie' />
-            {t('menuStake')}
-          </Menu.Item>
-
-          <Menu.Item
-            color={color as SemanticCOLORS}
-            name='democracy'
-            active={pathname === NAME_MAP.democracy}
-            onClick={this.handleItemClick.bind(this, 'democracy')}
-          >
-            <Icon name='thumbs up outline' />
-            {t('menuDemocracy')}
-          </Menu.Item>
-
           <Menu.Item
             color={color as SemanticCOLORS}
             name='send'
@@ -75,9 +54,7 @@ class BottomMenu extends React.Component<IBottomMenuProps> {
             <Icon name='send' />
             {t('menuSend')}
           </Menu.Item>
-
         </Menu>
-
       </div>
     )
   }
