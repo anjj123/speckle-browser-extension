@@ -7,7 +7,6 @@ import { IAppState } from '../../background/store/all'
 import { saveSettings } from '../../background/store/settings'
 import { ChainDropdown } from '../basic-components'
 
-
 interface ITopMenuProps extends StateProps, DispatchProps, RouteComponentProps {}
 
 interface ITopMenuState {
@@ -50,7 +49,7 @@ class TopMenu extends React.Component<ITopMenuProps, ITopMenuState> {
               <Image src='/assets/logo-s.svg' centered={true} />
             </Grid.Column>
 
-            <Grid.Column width={8} >
+            <Grid.Column width={10} >
               <ChainDropdown
                 className='chain'
                 fluid={true}
@@ -59,10 +58,6 @@ class TopMenu extends React.Component<ITopMenuProps, ITopMenuState> {
                 icon={<img src={this.state.chainIconUrl} alt='Chain logo'/>}
                 options={networkOptions}
               />
-            </Grid.Column>
-
-            <Grid.Column width={2} verticalAlign='middle'>
-              <Image src='/assets/icon-dots-s.svg' centered={true} />
             </Grid.Column>
 
             <Grid.Column width={2} verticalAlign='middle'>
