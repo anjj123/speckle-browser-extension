@@ -50,15 +50,13 @@ class TransactionList extends React.Component<ITransactionListProps, ITransactio
     const account = this.props.account
     if (!account || !(this.props.transactions)) {
       console.log('No transaction found.')
-      return (null)
+      return null
     }
 
     console.log('Rendering transactions: ', this.props.transactions)
 
     const panes = [
-      { menuItem: t('tabAll'), render: () => this.renderWithFilter('') },
-      { menuItem: t('tabSent'), render: () => this.renderWithFilter('Sent') },
-      { menuItem: t('tabStaked'), render: () => this.renderWithFilter('Staked') }
+      { menuItem: t('tabSent'), render: () => this.renderWithFilter('Sent') }
     ]
 
     const color = this.props.color
