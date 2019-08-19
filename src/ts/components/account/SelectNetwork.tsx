@@ -8,7 +8,7 @@ import {
   TopSection
 } from '../basic-components'
 import { HOME_ROUTE } from '../../constants/routes'
-import { Divider, Form, Input } from 'semantic-ui-react'
+import { Divider } from 'semantic-ui-react'
 import styled from 'styled-components'
 import NetworkList from './NetworkList'
 
@@ -39,13 +39,10 @@ class SelectNetwork extends React.Component<ISelectNetworkProps, ISelectNetworkS
         <TopSection>
           <Progress step={3}/>
         </TopSection>
-        <Form>
-          <ChainInput placeholder={'Chain Search'} onChange={this.handleChange}/>
-        </Form>
         <NetworkSection>
           <NetworkList search={this.state.search}/>
         </NetworkSection>
-        <ChainQuote>Start by selecting <span>3 chains</span></ChainQuote>
+        <ChainQuote><span>More chains</span> coming soon</ChainQuote>
         <Divider />
         <StyledButton type='button' onClick={this.gotoDashboard}>
           {t('selectNetwork')}
@@ -56,16 +53,6 @@ class SelectNetwork extends React.Component<ISelectNetworkProps, ISelectNetworkS
 }
 
 export default withRouter(SelectNetwork)
-
-const ChainInput = styled(Input)`
-  width: 311px
-  height: 42px
-  border-color: #cad3d7
-  color: #cad3d7
-  line-height: 1.43
-  font-size: 14px
-  font-family: Nunito
-`
 
 export const NetworkSection = styled.div`
   width: 100%

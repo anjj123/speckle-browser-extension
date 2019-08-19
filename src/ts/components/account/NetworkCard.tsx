@@ -11,6 +11,7 @@ interface INetworkCardProps {
   supported: boolean
   colorScheme: ColorScheme
   selected: Selected
+  disabled: boolean
 }
 
 interface INetworkCardState {
@@ -30,7 +31,7 @@ export default class NetworkCard extends React.Component<INetworkCardProps, INet
   toggleSelected = () => {
     this.setState((prevState) => {
       return {
-        selected: prevState.selected === false /* if false true if true false */
+        selected: this.props.disabled ? this.props.selected : prevState.selected === false /* if false true if true false */
       }
     })
   }
@@ -95,7 +96,7 @@ box-shadow: 0 2px 8px 0 rgba(62, 88, 96, 0.1);
 background-color: #ffffff
 }
 :hover {
-box-shadow: 0 0 11px rgba(33,33,33,.2)
+/*box-shadow: 0 0 11px rgba(33,33,33,.2)*/
 }
 `
 
