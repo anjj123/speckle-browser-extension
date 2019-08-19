@@ -23,6 +23,9 @@
 	},
 	"dependencies": {
     "@polkadot/api": "^0.90.0-beta.37",
+    "chart.js": "^2.8.0",
+    "react-chartjs-2": "^2.7.6",
+    "react-chrome-redux": "^2.0.0-alpha.5",
     "@polkadot/api-contract": "^0.90.0-beta.37",
     "@polkadot/keyring": "^1.1.1",
     "@polkadot/types": "^0.90.0-beta.37",
@@ -48,6 +51,7 @@
 		"semantic-ui-react": "^0.86.0",
 		"styled-components": "^4.3.1",
 		"webextension-polyfill-ts": "^0.8.9",
+    "webpack-extension-manifest-plugin": "^0.4.3",
     "edgeware-node-types": "^1.0.5",
     "@polkadot/extension-dapp": "^0.5.0-beta.5"
   },

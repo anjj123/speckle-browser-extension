@@ -3,6 +3,16 @@
   "author": "speckle",
   "version": "0.0.1",
   "description": "__MSG_appDescription__",
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "windows": "Alt+Shift+S",
+        "mac": "Alt+Shift+S",
+        "chromeos": "Alt+Shift+S",
+        "linux": "Alt+Shift+S"
+      }
+    }
+  },
   "default_locale": "en",
   "icons": {
     "128": "assets/icon-128.png"
@@ -17,7 +27,9 @@
     "storage",
     "webRequest",
     "webRequestBlocking",
-    "*://*/*"
+    "*://*/*",
+    "notifications",
+    "tabs"
   ],
   "manifest_version": 2,
   "background": {
@@ -38,7 +50,8 @@
   "content_scripts": [
     {
       "js": [
-        "content.js"
+        "content.js",
+        "injection.js"
       ],
       "matches": [
         "*://*/*"

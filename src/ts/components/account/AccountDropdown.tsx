@@ -237,25 +237,24 @@ class AccountDropdown extends React.Component<IAccountDropdownProps, IAccountDro
               basic={true}
             />
           </Tooltip>
-          {this.renderQrIcon()}
         </AccountSection>
       </Float>
     )
   }
 
+  /*
   renderQrIcon () {
     if (!this.props.qrDestination) return null
     return (
-      <Button
-        compact={true}
-        inverted={true}
-        basic={true}
-        icon='qrcode'
-        color='vk'
+      // FIXME: fix z-index when using semantic-ui-react-component
+      <button
         onClick={this.handleClickQR}
-      />
+      >
+        <Icon name='qrcode' inverted={true} color='grey' />
+      </button>
     )
   }
+   */
 }
 
 export const AccountSection = styled.div`
@@ -264,7 +263,7 @@ export const AccountSection = styled.div`
   text-align: center
 `
 export const Float = styled.div`
-  z-index: 1;
+  z-index: 300;
   position: relative;
 `
 

@@ -46,11 +46,11 @@ class RequestPanel extends React.Component<IRequestPanelProps> {
               <div>
                 <Image
                   src='/assets/icon-128.png'
-                  style={{ height: '85px', width: 'auto' }}
+                  style={{ height: '70px', width: 'auto', marginTop: '10px' }}
                   centered={true}
                 />
               </div>
-              <div>
+              <div style={{ marginTop: '4px' }}>
                 Speckle
               </div>
             </div>
@@ -71,6 +71,5 @@ const mapStateToProps = (state: IAppState) => {
 type StateProps = ReturnType<typeof mapStateToProps>
 
 const mapDispatchToProps = { }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(RequestPanel)

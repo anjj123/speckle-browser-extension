@@ -15,6 +15,7 @@ import {
   LOGIN_ROUTE,
   INITIALIZE_ROUTE,
   SEND_ROUTE,
+  VOTE_ROUTE,
   QR_ROUTE
 } from '../constants/routes'
 import { RouteWithLayout } from './RouteWithLayout'
@@ -35,6 +36,8 @@ import Missing from '../components/Missing'
 import Send from '../components/transaction/Send'
 import SelectNetwork from '../components/account/SelectNetwork'
 import QR from '../components/account/QR'
+import DemocracyLayout from '../layouts/DemocracyLayout'
+import Vote from '../components/democracy/Vote'
 
 export class Routes extends React.Component {
   renderRoutes () {
@@ -110,6 +113,12 @@ export class Routes extends React.Component {
           layout={LoginLayout}
           path={LOGIN_ROUTE}
           component={Login}
+          exact={true}
+        />
+        <RouteWithLayout
+          layout={DemocracyLayout}
+          path={VOTE_ROUTE}
+          component={Vote}
           exact={true}
         />
         <Route
