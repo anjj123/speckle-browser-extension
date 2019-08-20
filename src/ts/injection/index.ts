@@ -5,17 +5,19 @@ let obAttmpts = 0
 const CLASS_TWEET = 'css-1dbjc4n r-my5ep6 r-qklmqi r-1adg3ll'
 const CLASS_BTNCONTAINER = 'css-1dbjc4n r-18u37iz r-1wtj0ep r-156q2ks r-1mdbhws'
 const CLASS_STREAMLIST = 'css-1dbjc4n.r-1jgb5lz.r-1ye8kvj.r-6337vo.r-13qz1uu'
-const maxAttmpt = 100
+const MAX_ATTEMPT = 100
+const VOTE = /#(\S+)vote(\d+)/g
+// TODO: Add tip feature on twitter with tip speckletag
+// const TIP = /#(\S+)vote(\d+)/g
 
 function modifyTweets () {
   let tweets = document.getElementsByClassName(CLASS_TWEET)
   for (let i = 0, len = tweets.length; i < len; i++) {
     let tweet: any = tweets[i]
-    let matches = tweet.innerText.match(/#(\S+)proposal(\d+)/g)
+    let matches = tweet.innerText.match(VOTE)
     if (matches !== null) {
-      console.log(matches)
       let proposalId: number = parseInt(matches[matches.length - 1].match(/\d+/g)[0], 10)
-      let network: string = matches[matches.length - 1].match(/(\w*)proposal/g)[0].replace('proposal', '')
+      let network: string = matches[matches.length - 1].match(/(\w*)vote/g)[0].replace('vote', '')
       let userActionButtons = tweet.getElementsByClassName(CLASS_BTNCONTAINER)[0]
       if (userActionButtons !== undefined && !userActionButtons.classList.contains('speckle-button-added')) {
         userActionButtons.classList.add('speckle-button-added')
@@ -43,7 +45,7 @@ function modifyTweets () {
 }
 
 function addObserver () {
-  if (obAttmpts >= maxAttmpt) {
+  if (obAttmpts >= MAX_ATTEMPT) {
     return
   }
 
