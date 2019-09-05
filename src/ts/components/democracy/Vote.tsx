@@ -22,7 +22,7 @@ import AccountDropdown from '../account/AccountDropdown'
 import BN = require('bn.js')
 import VoteStatus from './VoteStatus'
 import styled from 'styled-components'
-import {Button, Icon} from 'semantic-ui-react'
+import { Button, Icon } from 'semantic-ui-react'
 import { formatBalance, formatNumber } from '@polkadot/util'
 import { INITIALIZE_ROUTE, LOGIN_ROUTE } from '../../constants/routes'
 import { colorSchemes } from '../styles/themes'

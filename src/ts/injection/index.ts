@@ -6,32 +6,33 @@ const CLASS_TWEET = 'css-1dbjc4n r-my5ep6 r-qklmqi r-1adg3ll'
 const CLASS_BTNCONTAINER = 'css-1dbjc4n r-18u37iz r-1wtj0ep r-156q2ks r-1mdbhws'
 const CLASS_STREAMLIST = 'css-1dbjc4n.r-1jgb5lz.r-1ye8kvj.r-6337vo.r-13qz1uu'
 const MAX_ATTEMPT = 100
-const VOTE = /#(\S+)vote(\d+)/g
-// TODO: Add tip feature on twitter with tip speckletag
-// const TIP = /#(\S+)vote(\d+)/g
+const DETECTOR = /#(.*?)(vote|tip|stake)(\w*)/
 
 function modifyTweets () {
   let tweets = document.getElementsByClassName(CLASS_TWEET)
   for (let i = 0, len = tweets.length; i < len; i++) {
     let tweet: any = tweets[i]
-    let matches = tweet.innerText.match(VOTE)
+    let matches = DETECTOR.exec(tweet.innerText)
     if (matches !== null) {
-      let proposalId: number = parseInt(matches[matches.length - 1].match(/\d+/g)[0], 10)
-      let network: string = matches[matches.length - 1].match(/(\w*)vote/g)[0].replace('vote', '')
+      let network: string = matches[1]
+      let userAction: string = matches[2]
+      let identifier: string = matches[3]
       let userActionButtons = tweet.getElementsByClassName(CLASS_BTNCONTAINER)[0]
       if (userActionButtons !== undefined && !userActionButtons.classList.contains('speckle-button-added')) {
         userActionButtons.classList.add('speckle-button-added')
-        const classButtton = 'speckle-button-vote'
+        const classButtton = `speckle-button-${userAction}`
 
         let buttonDiv = document.createElement('div')
         buttonDiv.className = 'rn-1oszu61 rn-1efd50x rn-14skgim rn-rull8r rn-mm0ijv rn-13yce4e rn-fnigne rn-ndvcnb rn-gxnn5r rn-deolkf rn-6koalj rn-1qe8dj5 rn-1iusvr4 rn-18u37iz rn-16y2uox rn-1h0z5md rn-1mnahxq rn-61z16t rn-p1pxzi rn-11wrixw rn-ifefl9 rn-bcqeeo rn-wk8lta rn-9aemit rn-1mdbw0j rn-gy4na3 rn-bnwqim rn-1lgpqti'
         let button = document.createElement('button')
         button.className = classButtton
+        if (userAction === 'tip') { userAction = 'send' }
 
+        // Add Listener redirecting to url of the extension
         button.addEventListener('click', () => {
           extension.sendMessage({
             action: 'createWindow',
-            url: extension.getURL('popup.html') + `#/vote/${network}/${proposalId}`
+            url: extension.getURL('popup.html') + `#/${userAction}/${network}/${identifier}`
           }, function (createdWindow) {
             console.log(createdWindow)
           })

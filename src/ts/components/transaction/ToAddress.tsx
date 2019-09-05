@@ -4,6 +4,7 @@ import t from '../../services/i18n'
 
 interface IToAddressProps {
   handleAddressChange: any
+  default: string
 }
 
 export default class ToAddress extends React.Component<IToAddressProps> {
@@ -12,8 +13,14 @@ export default class ToAddress extends React.Component<IToAddressProps> {
     return (
       <div>
         <Label>{t('toAddress')}</Label>
-        <Field>
-          <input type='text' onChange={this.props.handleAddressChange} size={34} maxLength={48}/>
+        <Field key={this.props.default}>
+          <input
+            type='text'
+            defaultValue={this.props.default || ''}
+            onChange={this.props.handleAddressChange}
+            size={34}
+            maxLength={48}
+          />
         </Field>
       </div>
     )

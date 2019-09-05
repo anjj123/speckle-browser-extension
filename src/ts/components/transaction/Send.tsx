@@ -284,6 +284,7 @@ class Send extends React.Component<ISendProps, ISendState> {
   }
 
   render () {
+    console.log('safsdfsdf', this.props.match.params['address'])
     if (!this.props.settings.selectedAccount) {
       return null
     }
@@ -312,7 +313,7 @@ class Send extends React.Component<ISendProps, ISendState> {
         <Form>
           <Amount handleAmountChange={this.changeAmount} handleDigitChange={this.changeSiUnit}/>
           <div style={{ height: 27 }} />
-          <ToAddress handleAddressChange={this.changeAddress}/>
+          <ToAddress handleAddressChange={this.changeAddress} default={this.state.toAddress}/>
           {this.isToAddressValid() || <ErrorMessage>{t('invalidAddress')}</ErrorMessage>}
           <div style={{ height: 27 }} />
           <AccountSection>
