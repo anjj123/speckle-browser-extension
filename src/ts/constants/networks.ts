@@ -48,6 +48,7 @@ export const chains: {[chainType: string]: Array<Network>} = {
 }
 
 export const networks: {[name: string]: Network} = {
+  [Alexander.name]: Alexander,
   [Kusama.name]: Kusama
 }
 
