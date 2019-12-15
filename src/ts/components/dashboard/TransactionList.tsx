@@ -6,29 +6,35 @@ import { IAppState } from '../../background/store/all'
 import { getTransactions, TransactionType, ITransaction } from '../../background/store/transaction'
 import t from '../../services/i18n'
 import { networks } from '../../constants/networks'
+import { displayAddress } from '../../services/address-transformer'
 
 interface ITransactionListProps extends StateProps, DispatchProps, RouteComponentProps {}
 
 interface ITransactionListState {
-  currentAddress: string
+  currentAddress: string,
+  currentNetwork: string
 }
 
 class TransactionList extends React.Component<ITransactionListProps, ITransactionListState> {
 
   state = {
-    currentAddress: ''
+    currentAddress: '',
+    currentNetwork: ''
   }
 
   static getDerivedStateFromProps (nextProps, prevState) {
     if (nextProps.account && nextProps.account.address !== prevState.currentAddress) {
       return { currentAddress: nextProps.account.address }
+    } else if (nextProps.network !== prevState.currentNetwork) {
+      return { currentNetwork: nextProps.network }
     } else {
       return null
     }
   }
 
   componentDidUpdate (_prevProps, prevState) {
-    if (prevState.currentAddress !== this.state.currentAddress) {
+    if (prevState.currentNetwork !== this.state.currentNetwork
+        || prevState.currentAddress !== this.state.currentAddress) {
       this.loadTransactions()
     }
   }
@@ -39,9 +45,9 @@ class TransactionList extends React.Component<ITransactionListProps, ITransactio
 
   private loadTransactions = () => {
     // load the transaction list
-    if (this.state.currentAddress) {
+    if (this.state.currentAddress && this.state.currentNetwork) {
       console.log('Getting transactions for ' + this.state.currentAddress)
-      this.props.getTransactions(this.state.currentAddress)
+      this.props.getTransactions(this.state.currentAddress, this.state.currentNetwork)
     }
   }
 
@@ -104,7 +110,7 @@ class TransactionList extends React.Component<ITransactionListProps, ITransactio
     const statusBorderColor = tran.status === 'Pending' ? 'grey' :
     tran.status === 'Success' ? '#51d8a7' : '#f3536d'
 
-    const toAddress = tran.to.substring(0, 8) + '...' + tran.to.substring(tran.to.length - 10)
+    const toAddress = displayAddress(tran.to, false)
 
     const createTimeFull = tran.createTime && tran.createTime > 0 ?
       new Date(tran.createTime).toLocaleString() : 'Time N/A'

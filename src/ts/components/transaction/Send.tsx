@@ -30,9 +30,9 @@ import {
   getTransactions,
   upsertTransaction
 } from '../../background/store/transaction'
-import { SubmittableResult } from '@polkadot/api/SubmittableExtrinsic'
+import { SubmittableResult } from '@polkadot/api'
 import { SubmittableExtrinsic } from '@polkadot/api/promise/types'
-import { HOME_ROUTE } from '../../constants/routes'
+import { HOME_ROUTE, QR_ROUTE } from '../../constants/routes'
 import { EventRecord, Index, Balance as BalanceType } from '@polkadot/types/interfaces'
 import { decodeAddress } from '@polkadot/util-crypto'
 
@@ -159,7 +159,8 @@ class Send extends React.Component<ISendProps, ISendState> {
       blockNumber: await this.api.query.system.number() as unknown as BN,
       blockHash: this.api.genesisHash,
       genesisHash: this.api.genesisHash,
-      nonce: await this.api.query.system.accountNonce(currentAddress) as Index
+      nonce: await this.api.query.system.accountNonce(currentAddress) as Index,
+      runtimeVersion: this.api.runtimeVersion
     }
     const payloadValue: ExtrinsicPayloadValue = {
       era: extrinsic.era,
@@ -167,7 +168,8 @@ class Send extends React.Component<ISendProps, ISendState> {
       blockHash: signOptions.blockHash,
       genesisHash: signOptions.genesisHash,
       nonce: signOptions.nonce,
-      tip: 0
+      tip: 0,
+      specVersion: this.api.runtimeVersion.specVersion.toNumber()
     }
     signExtrinsic(extrinsic, currentAddress, signOptions).then(signature => {
       const signedExtrinsic = extrinsic.addSignature(
@@ -211,6 +213,7 @@ class Send extends React.Component<ISendProps, ISendState> {
 
     this.props.upsertTransaction(
       address,
+      this.props.settings.network,
       txItem,
       this.props.transactions
     )
@@ -230,10 +233,12 @@ class Send extends React.Component<ISendProps, ISendState> {
           // TODO: const the value
           if (method === 'ExtrinsicSuccess') {
             txItem.status = 'Success'
-            this.props.upsertTransaction(address, txItem, this.props.transactions)
+            this.props.upsertTransaction(address, this.props.settings.network,
+              txItem, this.props.transactions)
           } else if (method === 'ExtrinsicFailed') {
             txItem.status = 'Failure'
-            this.props.upsertTransaction(address, txItem, this.props.transactions)
+            this.props.upsertTransaction(address, this.props.settings.network,
+              txItem, this.props.transactions)
           }
         })
         done && done()
@@ -245,16 +250,20 @@ class Send extends React.Component<ISendProps, ISendState> {
         this.setState({ isLoading: false })
         txItem.status = 'Failure'
         txItem.updateTime = new Date().getTime()
-        this.props.upsertTransaction(address, txItem, this.props.transactions)
+        this.props.upsertTransaction(address, this.props.settings.network,
+          txItem, this.props.transactions)
         this.props.setError('Failed to send the transaction')
         if (!this.state.isTimeout) {
           clearTimeout(sendTimer)
         }
       }
-    }).catch(() => {
+    }).catch((err) => {
+      console.log('Error', err)
       txItem.status = 'Failure'
+      this.setState({ isLoading: false })
       txItem.updateTime = new Date().getTime()
-      this.props.upsertTransaction(address, txItem, this.props.transactions)
+      this.props.upsertTransaction(address, this.props.settings.network,
+        txItem, this.props.transactions)
       this.props.setError('Failed to send the transaction')
       if (!this.state.isTimeout) {
         clearTimeout(sendTimer)
@@ -303,7 +312,7 @@ class Send extends React.Component<ISendProps, ISendState> {
         <Dimmer active={this.state.isLoading}>
           <Loader indeterminate={true}> Processing transaction, please wait ...</Loader>
         </Dimmer>
-        <AccountDropdown/>
+        <AccountDropdown qrDestination={QR_ROUTE} />
         <AccountSection>
           <Balance address={this.props.settings.selectedAccount.address} />
         </AccountSection>
