@@ -25,20 +25,16 @@ class NetworkList extends React.Component<INetworkListProps> {
   }
 
   render () {
-
-    const panes = [
-      { menuItem: t('recommended'), render: () => this.renderWithFilter('Recommended') },
-    ]
-
-    const color = this.props.color
-
     return (
-      <div>
-        <Tab
-          menu={{ color: color, secondary: true, pointing: true }}
-          panes={panes}
-        />
-      </div>
+      <CardTabPane>
+        <Networks id={'scroll-menu'}>
+          <NetworkCard imgPath={'assets/chain-logo/polkadot.png'} name={'Alexander'} supported={true} selected={true} disabled={true} colorScheme={colorSchemes[this.props.color]}/>
+          <NetworkCard imgPath={'assets/chain-logo/kusama.png'} name={'Kusama'} supported={true} selected={true} disabled={true} colorScheme={colorSchemes[this.props.color]}/>
+          <NetworkCard imgPath={'assets/chain-logo/edgeware.png'} name={'Edgeware'} supported={false} selected={false} disabled={true} colorScheme={colorSchemes[this.props.color]}/>
+        </Networks>
+        <PrevButton onMouseDown={this.prev} colorScheme={colorSchemes[this.props.color]}/>
+        <NextButton onMouseDown={this.next} colorScheme={colorSchemes[this.props.color]}/>
+      </CardTabPane>
     )
   }
 
@@ -51,7 +47,7 @@ class NetworkList extends React.Component<INetworkListProps> {
       <CardTabPane>
         <Networks id={'scroll-menu'}>
           <NetworkCard imgPath={'assets/chain-logo/polkadot.png'} name={'Alexander'} supported={true} selected={true} disabled={true} colorScheme={colorSchemes[this.props.color]}/>
-          <NetworkCard imgPath={'assets/chain-logo/kusama.png'} name={'Kusama'} supported={false} selected={false} disabled={true} colorScheme={colorSchemes[this.props.color]}/>
+          <NetworkCard imgPath={'assets/chain-logo/kusama.png'} name={'Kusama'} supported={true} selected={true} disabled={true} colorScheme={colorSchemes[this.props.color]}/>
           <NetworkCard imgPath={'assets/chain-logo/edgeware.png'} name={'Edgeware'} supported={false} selected={false} disabled={true} colorScheme={colorSchemes[this.props.color]}/>
          </Networks>
         <PrevButton onMouseDown={this.prev} colorScheme={colorSchemes[this.props.color]}/>
@@ -74,7 +70,7 @@ const mapDispatchToProps = { /* getNetworks */ }
 
 export default (connect(mapStateToProps, mapDispatchToProps)(NetworkList))
 
-const CardTabPane = styled(Tab.Pane)`
+const CardTabPane = styled.div`
 {
 width: 319px !important
 overflow-x: hidden
@@ -83,14 +79,14 @@ overflow-x: hidden
 
 const PrevButton = styled(ScrollButton)`
   position: absolute
-  top: 40%
+  top: 48%
   left: 3%
   transform: rotate(180deg)
 `
 
 const NextButton = styled(ScrollButton)`
   position: absolute
-  top: 40%
+  top: 48%
   right: 3%
 `
 const Networks = styled.div`
