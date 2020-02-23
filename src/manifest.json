@@ -17,7 +17,9 @@
     "storage",
     "webRequest",
     "webRequestBlocking",
-    "*://*/*"
+    "*://*/*",
+    "notifications",
+    "tabs"
   ],
   "manifest_version": 2,
   "background": {
@@ -44,6 +46,15 @@
         "*://*/*"
       ],
       "run_at": "document_start"
+    },
+    {
+      "js": [
+        "injection.js"
+      ],
+      "matches": [
+        "https://twitter.com/*"
+      ],
+      "run_at": "document_idle"
     }
   ]
 }

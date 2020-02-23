@@ -18,7 +18,8 @@ module.exports = {
     options: path.join(sourceRootPath, 'ts', 'options', 'index.tsx'),
     popup: path.join(sourceRootPath, 'ts', 'popup', 'index.tsx'),
     speckle: path.join(sourceRootPath, 'ts', 'page', 'index.ts'),
-    content: path.join(sourceRootPath, 'ts', 'content', 'index.tsx')
+    content: path.join(sourceRootPath, 'ts', 'content', 'index.tsx'),
+    injection: path.join(sourceRootPath, 'ts', 'injection', 'index.ts')
   },
   output: {
     path: distRootPath,
